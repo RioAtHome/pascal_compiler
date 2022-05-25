@@ -8,25 +8,26 @@ subprogram_declarations ::= subprogram_declarations_
 subprogram_declaration ::= subprogram_head declarations compound_statement
 subprogram_head ::= function id args : standard_type ;
 subprogram_head ::= procedure id args ;
-args ::= l# parameter_list r#
 args ::= ''
+args ::= ( parameter_list )
+
 parameter_list ::= id identifier_list_ : type parameter_list_
 compound_statement ::= begin optional_statements end
 optional_statements ::= statement_list
 optional_statements ::= ''
 statement_list ::= statement statement_list_
-statement ::= variable assignop expression
-statement ::= procedure_statement
 statement ::= begin optional_statements end
 statement ::= if expression then statement match_statement
 statement ::= while expression do statement
+statement ::= id statement_
+statement_ ::= variable_ assignop expression
+statement_ ::=  procedure_statement_
 match_statement ::= else statement
-match_statement ::= ''
 variable ::= id variable_
 variable_ ::= [ expression ]
 variable_ ::= ''
 procedure_statement ::= id procedure_statement_
-procedure_statement_ ::= l# expression_list r#
+procedure_statement_ ::= ( expression_list )
 procedure_statement_ ::= ''
 expression_list ::= expression expression_list_
 expression ::= simple_expression expression_
@@ -35,18 +36,19 @@ expression_ ::= ''
 simple_expression ::= term simple_expression_
 simple_expression ::= sign term simple_expression_
 term ::= factor term_
-factor_ ::= l# expression_list r#
+factor_ ::= ( expression_list )
 factor_ ::= ''
 factor ::= id factor_
 factor ::= num
-factor ::= l# expression r#
+factor ::= ( expression )
 factor ::= not factor
 sign ::= +
 sign ::= -
 identifier_list_ ::= , id identifier_list_
 identifier_list_ ::= ''
 declarations ::= declarations_
-declarations_ ::= var identifier_list : type ; | ''
+declarations_ ::= var identifier_list : type ;
+declarations_ ::= ''
 subprogram_declarations_ ::= subprogram_declaration ; subprogram_declarations_
 subprogram_declarations_ ::= ''
 parameter_list_ ::= ; identifier_list : type parameter_list_
@@ -74,3 +76,7 @@ addop ::= +
 addop ::= -
 addop ::= or
 assignop ::= :=
+
+
+
+program id ; var id , id : integer ; function id ( id , id : integer ) : integer ; begin if id = num then id := id else id := id ( id, id mod id )  end ; begin id ( id , id ) ; id ( id ( id , id ) ) end .

@@ -50,9 +50,8 @@ class Analyzer:
     def __init__(self, pascal_file, symbol_table=[]):
         with open(pascal_file, "r+") as file:
             self.input_string = file.read()
-            self.input_string.append("@")
-            self.input_string.split("\n")
-
+            self.input_string = self.input_string.split("\n")
+            
         self.input_string = [
             line.replace("  ", " ").strip() for line in self.input_string
         ]
@@ -66,7 +65,7 @@ class Analyzer:
 
         self.symbol_table.append(self.token)
 
-        self.token = {"Name": "", "Type": "", "Line No": 0}
+        return self.token
 
     def next_token(self):
         for line_ in self.input_string:
@@ -99,7 +98,6 @@ class Analyzer:
                     token = self.put_into_symbol_table(word, 2, line_count)
                     yield token
                     continue
-                print(buffer)
                 for entry in buffer:
                     if entry in KEYWORDS:
                         token = self.put_into_symbol_table(entry, 0, line_count)
@@ -122,6 +120,10 @@ if __name__ == "__main__":
         symbol_table = []
         analyzer = Analyzer(file, symbol_table)
         get_token = analyzer.next_token()
+        print(next(get_token))
+        print(next(get_token))
+        print(next(get_token))
+
     else:
         print("Cant find file!")
         sys.exit()
