@@ -1,4 +1,4 @@
-KEYWORDS = (
+KEYWORDS = [
     "program",
     "integer",
     "boolean",
@@ -44,4 +44,4 @@ KEYWORDS = (
     ".",
     "=",
     ":" "$",
-)
+]

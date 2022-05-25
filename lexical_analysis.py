@@ -2,50 +2,6 @@ import sys
 import os
 from keywords import KEYWORDS
 
-# token = {
-#         "Name": "",
-#         "Type": "",
-#         "Line No": 0
-#     }
-
-
-# # def print_token(name, _type, line_number):
-# #     token["Name"] = name
-# #     token["Type"] = _type
-# #     token["Line No"] = line_number
-# #     print(token)
-# #     print("\n")
-
-
-# def lexical_analysis(pascal_file):
-#     with open(pascal_file, 'r+') as file:
-#         count_line = 0
-#         for line in file:
-#             count_line += 1
-#             # Remove newline word from  line
-#             refined_line = line.strip().replace(' ', '').lower()
-#             buffer = ''
-#             for word in refined_line:
-#                 # keep putting each new word into buffer until a keyword is
-#                 # met, either one word keyword, or multi word keyword
-#                 # if no keyword is met, its either an int or var
-#                 buffer += word
-#                 if word in KEYWORDS:
-#                     buffer = buffer[:-1]
-#                     if len(buffer) != 0:
-#                         try:
-#                             int(buffer)
-#                             print_token(buffer, '1', count_line)
-#                         except ValueError:
-#                             print_token(buffer, '2', count_line)
-#                     buffer = ''
-#                     print_token(word, '0', count_line)
-#                 elif buffer in KEYWORDS:
-#                     print_token(buffer, '0', count_line)
-#                     buffer = ''
-#         buffer = ''
-
-
 class Analyzer:
     def __init__(self, pascal_file, symbol_table=[]):
         with open(pascal_file, "r+") as file:
@@ -82,6 +38,7 @@ class Analyzer:
                     continue
                 if word.isnumeric():
                     token = self.put_into_symbol_table(word, 1, line_count)
+                    KEYWORDS.append(token["Name"])
                     yield token
                     continue
                 for char, index in zip(word, range(len(word))):
@@ -96,15 +53,23 @@ class Analyzer:
                         last_keyword = index
                 if last_keyword == 0:
                     token = self.put_into_symbol_table(word, 2, line_count)
+                    print(token)
+                    print("####")
+                    KEYWORDS.append(token["Name"])
                     yield token
                     continue
                 for entry in buffer:
+                    
                     if entry in KEYWORDS:
                         token = self.put_into_symbol_table(entry, 0, line_count)
-                    if entry.isnumeric():
+                        
+                    elif entry.isnumeric():
                         token = self.put_into_symbol_table(entry, 1, line_count)
+                        KEYWORDS.append(token["Name"])
                     else:
                         token = self.put_into_symbol_table(entry, 2, line_count)
+                        print(token)
+                        KEYWORDS.append(token["Name"])
                     yield token
             line_count += 1
 
