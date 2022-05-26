@@ -13,10 +13,8 @@ KEYWORDS = [
     "true",
     "false",
     "do",
-    "write",
     "mod",
     "div",
-    "read",
     "and",
     "array",
     "or",
@@ -43,5 +41,6 @@ KEYWORDS = [
     "-",
     ".",
     "=",
-    ":" "$",
+    ":",
+    "$",
 ]

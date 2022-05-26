@@ -10,7 +10,6 @@ subprogram_head ::= function id args : standard_type ;
 subprogram_head ::= procedure id args ;
 args ::= ''
 args ::= ( parameter_list )
-
 parameter_list ::= id identifier_list_ : type parameter_list_
 compound_statement ::= begin optional_statements end
 optional_statements ::= statement_list

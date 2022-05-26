@@ -24,8 +24,8 @@ class Analyzer:
         return self.token
 
     def next_token(self):
+        line_count = 1
         for line_ in self.input_string:
-            line_count = 1
             for word in line_.split(" "):
                 if word == "":
                     continue
@@ -34,6 +34,7 @@ class Analyzer:
                 last_keyword = 0
                 if word in KEYWORDS:
                     token = self.put_into_symbol_table(word, 0, line_count)
+                    
                     yield token
                     continue
                 if word.isnumeric():
@@ -42,24 +43,29 @@ class Analyzer:
                     yield token
                     continue
                 for char, index in zip(word, range(len(word))):
+                    
                     if char in KEYWORDS:
                         if last_keyword == 0:
                             buffer.append(word[:index])
                             buffer.append(word[index])
                             last_keyword = index
                             continue
-                        buffer.append(word[last_keyword + 1 : index])
-                        buffer.append(word[index])
-                        last_keyword = index
+                        if last_keyword == index - 1:
+                            buffer.append(word[index])
+                        else:
+                            buffer.append(word[last_keyword + 1 : index])
+                            buffer.append(word[index])
+                            last_keyword = index
                 if last_keyword == 0:
                     token = self.put_into_symbol_table(word, 2, line_count)
-                    print(token)
-                    print("####")
-                    KEYWORDS.append(token["Name"])
+                    
+
+                    
+                    
                     yield token
                     continue
                 for entry in buffer:
-                    
+
                     if entry in KEYWORDS:
                         token = self.put_into_symbol_table(entry, 0, line_count)
                         
@@ -68,8 +74,9 @@ class Analyzer:
                         KEYWORDS.append(token["Name"])
                     else:
                         token = self.put_into_symbol_table(entry, 2, line_count)
-                        print(token)
-                        KEYWORDS.append(token["Name"])
+                        
+                        
+
                     yield token
             line_count += 1
 
@@ -85,9 +92,8 @@ if __name__ == "__main__":
         symbol_table = []
         analyzer = Analyzer(file, symbol_table)
         get_token = analyzer.next_token()
-        print(next(get_token))
-        print(next(get_token))
-        print(next(get_token))
+        for _ in range(100):
+            print(next(get_token))
 
     else:
         print("Cant find file!")

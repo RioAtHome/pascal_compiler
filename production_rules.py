@@ -7,42 +7,36 @@ def identifier_list(production_num=1):
 
 def type_(production_num=1):
     if production_num == 1:
-        production_output = ["standard_type"]
+        return ["standard_type"]
     elif production_num == 2:
-        production_output = ["array", "[", "num", "..", "num", "]", "of", "standard_type"]
-    return production_output
+        return ["array", "[", "num", "..", "num", "]", "of", "standard_type"]
+    
 
 def standard_type(production_num=1):
     if production_num == 1:
-        production_output = ["integer"]
+        return ["integer"]
     elif production_num == 2:
-        production_output = ["real"]
-    return production_output
-
+        return ["real"]
 
 def subprogram_declarations(production_num=1):
-    production_output = ["subprogram_declarations_"]
-    return production_output
+    return ["subprogram_declarations_"]
 
 
 def subprogram_declaration(production_num=1):
-    production_output = ["subprogram_head", "declarations", "compound_statement"]
-    return production_output
+    return ["subprogram_head", "declarations", "compound_statement"]
+
 
 def subprogram_head(production_num=1):
     if production_num == 1:
-        production_output = ["function", "id", "args", ":", "standard_type", ";"]
+        return ["function", "id", "args", ":", "standard_type", ";"]
     elif production_num == 2:
-        production_output = ["procedure", "id", "args", ";"]
-    return production_output
+        return ["procedure", "id", "args", ";"]
 
 def args(production_num=1):
     if production_num == 1:
         return []
     elif production_num == 2:
-        production_output = ["(", "parameter_list", ")"]
-    
-    return production_output
+        return ["(", "parameter_list", ")"]
 
 def parameter_list(production_num=1):
     return ["id", "identifier_list_", ":", "type_", "parameter_list_"]
@@ -78,7 +72,7 @@ def statement_(production_num=1):
         return ["procedure_statement_"]
 
 def match_statement(production_num=1):
-    return ["else", "statement_"]
+    return ["else", "statement"]
 
 def variable(production_num=1):
     return ["id", "variable_"]
@@ -120,7 +114,7 @@ def simple_expression(production_num=1):
 
 
 def term(production_num=1):
-    return ["factor", "term"]
+    return ["factor", "term_"]
 
 
 def factor(production_num=1):
