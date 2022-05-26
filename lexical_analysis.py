@@ -25,8 +25,10 @@ class Analyzer:
 
     def next_token(self):
         line_count = 1
+
         for line_ in self.input_string:
             for word in line_.split(" "):
+
                 if word == "":
                     continue
 
@@ -37,25 +39,31 @@ class Analyzer:
                     
                     yield token
                     continue
+
                 if word.isnumeric():
                     token = self.put_into_symbol_table(word, 1, line_count)
                     KEYWORDS.append(token["Name"])
                     yield token
                     continue
+
+                # To take into account words( split(" ") ) with single char keyword in them.
+                # cut the word into keyword and num/id ..
                 for char, index in zip(word, range(len(word))):
-                    
                     if char in KEYWORDS:
                         if last_keyword == 0:
                             buffer.append(word[:index])
                             buffer.append(word[index])
                             last_keyword = index
                             continue
+
                         if last_keyword == index - 1:
                             buffer.append(word[index])
                         else:
                             buffer.append(word[last_keyword + 1 : index])
                             buffer.append(word[index])
                             last_keyword = index
+
+                # no single char keywords in word?, then its a variable name
                 if last_keyword == 0:
                     token = self.put_into_symbol_table(word, 2, line_count)
                     
@@ -93,8 +101,10 @@ if __name__ == "__main__":
         analyzer = Analyzer(file, symbol_table)
         get_token = analyzer.next_token()
         for _ in range(100):
-            print(next(get_token))
-
+            try:
+                print(next(get_token))
+            except StopIteration:
+                sys.exit()
     else:
         print("Cant find file!")
         sys.exit()

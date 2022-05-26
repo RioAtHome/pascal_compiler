@@ -1,4 +1,6 @@
 import production_rules
+
+# No entry Means Error
 PARSING_TABLE = {
     "header":{"program":1},
     "identifier_list":{"id": 1},
@@ -42,6 +44,7 @@ PARSING_TABLE = {
     "assignop":{":=":1},
 
 }
+
 production_mapping = {
     "header":production_rules.header,
     "identifier_list":production_rules.identifier_list,

@@ -2,7 +2,7 @@ program example;
 var x, y: integer;
 function gcd(a, b: integer): integer;
 begin
-if badboy = 235 then gcd := aayeo
+if b = 235 then gcd := a
 else gcd := gcd(b, a mod b) 
 end;
 

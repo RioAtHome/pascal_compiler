@@ -1,3 +1,4 @@
+# Production rules for Grammar in grammar.txt
 def header(production_num=1):
     production_output = ["program", "id", ";", "declarations", "subprogram_declarations", "compound_statement", "."]
     return production_output
